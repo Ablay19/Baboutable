@@ -1,0 +1,44 @@
+<!DOCTYPE html>                                                                                                                      <html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>جدول الأشخاص</title>
+  <style>
+    body { font-family: sans-serif; background: #f8f8f8; padding: 20px; }
+    table { font-size:18px; border-collapse: collapse; width:100%; background:#fff; }
+    th, td { border:1px solid #ccc; padding:8px; text-align:right; }
+    th { background:#eee; }
+    form { margin-bottom:20px; }
+  </style>
+</head>
+<body>
+  <h2>إضافة شخص</h2>
+  <form action="/add" method="POST">
+    الاسم: <input type="text" name="name" required>
+    الهاتف: <input type="number" name="phone" required>
+    التاريخ: <input type="date" name="date" required>
+    تم: <input type="checkbox" name="done">
+    <button type="submit">➕ إضافة</button>
+  </form>
+
+  <h2>الجدول</h2>
+  <table>
+    <thead>
+      <tr><th>الاسم</th><th>الهاتف</th><th>التاريخ</th><th>تم</th><th>خيارات</th></tr>
+    </thead>
+    <tbody>
+      {{range .}}
+      <tr>
+        <td>{{.Name}}</td>
+        <td>{{.Phone}}</td>
+        <td>{{.Date}}</td>
+        <td><input type="checkbox" disabled {{if .Done}}checked{{end}}></td>
+        <td>
+          <a href="/toggle?id={{.ID}}">✔️ تغيير</a>
+          <a href="/delete?id={{.ID}}" onclick="return confirm('هل تريد حذف هذا السطر؟')">🗑️ حذف</a>
+        </td>
+      </tr>
+      {{end}}
+    </tbody>
+  </table>
+</body>
+</html>
